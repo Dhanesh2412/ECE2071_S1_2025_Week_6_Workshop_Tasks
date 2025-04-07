@@ -33,7 +33,7 @@ int main()
     scanf("%s", string_1);
     filter_ascending(string_1);
     printf("The modified string is: ");
-    printf("%s\n", string_1);
+    printf("%s\n\n", string_1);
 	return 0;
 }
 
