@@ -60,7 +60,8 @@ int main(int argc, char *argv[])
         insert_node(&treePtr, atoi(token));
         //printf("Enter the value of the new data member: ");
         //scanf("%d", &temp);     
-		token = strtok(NULL, ",");     
+		token = strtok(NULL, ","); 
+		//temp = atoi(token) WOULD NOT WORK IN FINAL ITERATION - NULL    
     }
     printf("Initial version of binary tree:\n");
     inOrder(treePtr);
