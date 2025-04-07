@@ -30,6 +30,7 @@ tree, where the data in the printed output is delimited using one whitespace cha
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 struct node
 {
@@ -42,16 +43,24 @@ void insert_node(struct node** treePtr, int data);
 void inOrder(struct node* treePtr);
 void delete_tree(struct node** treePtr);
 
-int main() {
-	int temp = 0;
+int main(int argc, char *argv[])
+{
+    if (argc != 2) {
+        printf("The first user argument is %s\n", argv[1]);  
+    }
+	//int temp = 0;
+	char *token = NULL;
+	token = strtok(argv[1], ",");
+	
 	struct node* treePtr = NULL;
-    printf("Enter the value of the new data member: ");
-	scanf("%d", &temp);
-    while (temp > 0)
+    //printf("Enter the value of the new data member: ");
+	//scanf("%d", &temp);
+    while (token!=NULL)
     {
-        insert_node(&treePtr, temp);
-        printf("Enter the value of the new data member: ");
-        scanf("%d", &temp);            
+        insert_node(&treePtr, atoi(token));
+        //printf("Enter the value of the new data member: ");
+        //scanf("%d", &temp);     
+		token = strtok(NULL, ",");     
     }
     printf("Initial version of binary tree:\n");
     inOrder(treePtr);
@@ -95,9 +104,12 @@ void inOrder(struct node* treePtr)
 	}
 }
 
-void delete_tree(struct node** treePtr)
+void delete_tree(struct node** treePtr) // currently pre order -> vlr, post -> left, right, visit
 {
-       free(*treePtr);
-	   delete_tree(&((*treePtr)->leftPtr));
-       delete_tree(&((*treePtr)->rightPtr));
+	if (*treePtr!=NULL){ // only if tree pointer exists
+		delete_tree(&((*treePtr)->leftPtr)); // left
+		delete_tree(&((*treePtr)->rightPtr)); // right
+		free(*treePtr); // visit
+		*treePtr = NULL; // set it to NULL, because the initial tree pointer points to a freed node
+	}
 }
